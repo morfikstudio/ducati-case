@@ -1,4 +1,4 @@
-import { PortableText, PortableTextComponents } from "@portabletext/react"
+import { PortableText, type PortableTextComponents } from "@portabletext/react"
 
 const components: Partial<PortableTextComponents> = {
   block: {

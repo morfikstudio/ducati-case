@@ -374,7 +374,10 @@ export function PropertyDetail({ property }: PropertyDetailProps) {
               {/* Contatti */}
               <section className="rounded-lg border bg-card p-6">
                 <h3 className="mb-4 text-lg font-semibold">Contatti</h3>
-                <button className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+                <button
+                  className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                  type="button"
+                >
                   Contatta agente
                 </button>
               </section>

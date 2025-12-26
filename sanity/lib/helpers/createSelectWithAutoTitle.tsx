@@ -1,4 +1,4 @@
-import { defineField, FieldDefinition } from "sanity"
+import { defineField, type FieldDefinition } from "sanity"
 
 import { SelectWithAutoTitle } from "../components/SelectWithAutoTitle"
 
@@ -11,9 +11,6 @@ interface CreateSelectWithAutoTitleOptions {
   }[]
   valueFieldTitle?: string
   customFieldLabel?: string
-  previewTitle?: string
-  previewSubtitle?: string
-  emptyMessage?: string
 }
 
 export function createSelectWithAutoTitle({
@@ -22,9 +19,6 @@ export function createSelectWithAutoTitle({
   options,
   valueFieldTitle = "Opzioni",
   customFieldLabel = "Etichetta",
-  previewTitle = "Nessuna opzione selezionata",
-  previewSubtitle,
-  emptyMessage = "Nessuna opzione selezionata",
 }: CreateSelectWithAutoTitleOptions): FieldDefinition {
   return defineField({
     name,

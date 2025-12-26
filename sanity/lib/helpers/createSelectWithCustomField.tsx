@@ -1,4 +1,4 @@
-import { defineField, FieldDefinition } from "sanity"
+import { defineField, type FieldDefinition } from "sanity"
 
 import { SelectWithCustomField } from "../components/SelectWithCustomField"
 

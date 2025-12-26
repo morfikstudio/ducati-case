@@ -41,11 +41,11 @@ export const initGA = (measurementId: string) => {
   if (typeof window === "undefined") return
 
   window.dataLayer = window.dataLayer || []
-  window.gtag = function () {
-    window.dataLayer!.push(arguments)
+  window.gtag = function (...args) {
+    window.dataLayer?.push(...args)
   }
   if (process.env.NODE_ENV === "development") {
-    window.dataLayer!.push({ debug_mode: true })
+    window.dataLayer?.push({ debug_mode: true })
   }
 
   const script = document.createElement("script")

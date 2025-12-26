@@ -1,4 +1,4 @@
-import { type SchemaTypeDefinition } from "sanity"
+import type { SchemaTypeDefinition } from "sanity"
 
 /* Real Estates */
 import { residentialType } from "./real-estates/residentialType"
