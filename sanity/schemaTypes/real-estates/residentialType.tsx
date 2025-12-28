@@ -29,10 +29,10 @@ export const residentialType = defineType({
       hidden: true,
     },
     { name: "location", title: "Località" },
-    { name: "info", title: "Informazioni generali" },
-    { name: "specs", title: "Specifiche tecniche" },
+    { name: "info", title: "Generali" },
+    { name: "specs", title: "Specifiche" },
     { name: "download", title: "Download" },
-    { name: "contents", title: "Contenuti annuncio" },
+    { name: "contents", title: "Contenuti" },
     { name: "all", title: "Tutti" },
   ],
   fields: [
