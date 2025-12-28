@@ -31,6 +31,7 @@ export const residentialType = defineType({
     { name: "location", title: "Località" },
     { name: "info", title: "Informazioni generali" },
     { name: "specs", title: "Specifiche tecniche" },
+    { name: "download", title: "Download" },
     { name: "contents", title: "Contenuti annuncio" },
     { name: "all", title: "Tutti" },
   ],
@@ -300,6 +301,22 @@ export const residentialType = defineType({
         }),
       ],
       group: ["all", "specs"],
+    }),
+    defineField({
+      name: "pdfFiles",
+      title: "File PDF",
+      type: "array",
+      description:
+        "Carica uno o più file PDF da rendere disponibili per il download",
+      of: [
+        {
+          type: "file",
+          options: {
+            accept: ".pdf",
+          },
+        },
+      ],
+      group: ["all", "download"],
     }),
     defineField({
       name: "contents",

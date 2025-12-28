@@ -48,6 +48,14 @@ export const RESIDENTIAL_DETAIL_QUERY = defineQuery(
     info,
     mainSpecs,
     additionalSpecs,
-    contents
+    contents,
+    pdfFiles[] {
+      asset-> {
+        _id,
+        url,
+        originalFilename,
+        size
+      }
+    }
   }`,
 )

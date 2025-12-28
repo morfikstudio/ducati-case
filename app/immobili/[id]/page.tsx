@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 
 import { client } from "@/sanity/lib/client"
 import { RESIDENTIAL_DETAIL_QUERY } from "@/sanity/lib/queries"
-import type { Residential } from "@/sanity.types"
+import type { RESIDENTIAL_DETAIL_QUERYResult } from "@/sanity.types"
 
 import { PropertyDetail } from "@/components/PropertyDetail"
 
@@ -12,7 +12,7 @@ interface PageProps {
 
 export default async function ResidentialDetailPage({ params }: PageProps) {
   const { id } = await params
-  const property = await client.fetch<Residential | null>(
+  const property = await client.fetch<RESIDENTIAL_DETAIL_QUERYResult>(
     RESIDENTIAL_DETAIL_QUERY,
     { id },
   )

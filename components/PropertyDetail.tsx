@@ -1,13 +1,15 @@
 import Image from "next/image"
 
 import { urlFor } from "@/sanity/lib/image"
-import type { Residential } from "@/sanity.types"
+import type { RESIDENTIAL_DETAIL_QUERYResult } from "@/sanity.types"
 
 import RichText from "@/components/RichText"
 import MapDetail from "@/components/MapDetail"
 
+type Property = NonNullable<RESIDENTIAL_DETAIL_QUERYResult>
+
 interface PropertyDetailProps {
-  property: Residential
+  property: Property
 }
 
 function formatPrice(price?: number, privateNegotiation?: boolean) {
@@ -20,7 +22,7 @@ function formatPrice(price?: number, privateNegotiation?: boolean) {
   }).format(price)
 }
 
-function formatAddress(address?: Residential["address"]) {
+function formatAddress(address?: Property["address"]) {
   if (!address) return "Indirizzo non disponibile"
   const parts = [
     address.streetName,
@@ -31,7 +33,7 @@ function formatAddress(address?: Residential["address"]) {
   return parts.join(", ")
 }
 
-function formatFullAddress(address?: Residential["address"]) {
+function formatFullAddress(address?: Property["address"]) {
   if (!address) return "Indirizzo non disponibile"
   const parts = [
     address.streetName,
@@ -371,16 +373,57 @@ export function PropertyDetail({ property }: PropertyDetailProps) {
                 </section>
               )}
 
-              {/* Contatti */}
-              <section className="rounded-lg border bg-card p-6">
-                <h3 className="mb-4 text-lg font-semibold">Contatti</h3>
-                <button
-                  className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-                  type="button"
-                >
-                  Contatta agente
-                </button>
-              </section>
+              {/* File PDF */}
+              {property.pdfFiles && property.pdfFiles.length > 0 && (
+                <section className="rounded-lg border bg-card p-6">
+                  <h3 className="mb-4 text-lg font-semibold">Download</h3>
+                  <ul className="space-y-2">
+                    {property.pdfFiles.map((pdfFile, index) => {
+                      if (!pdfFile.asset?.url) return null
+                      const filename =
+                        pdfFile.asset.originalFilename ||
+                        `Documento ${index + 1}.pdf`
+                      const fileSize = pdfFile.asset.size
+                        ? `${(pdfFile.asset.size / 1024 / 1024).toFixed(2)} MB`
+                        : null
+
+                      return (
+                        <li key={pdfFile.asset._id || index}>
+                          <a
+                            href={pdfFile.asset.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-between rounded-md border border-border bg-background px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                          >
+                            <span className="flex items-center gap-2 truncate">
+                              <svg
+                                className="h-4 w-4 shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                                />
+                              </svg>
+                              <span className="truncate">{filename}</span>
+                            </span>
+                            {fileSize && (
+                              <span className="ml-2 text-xs text-muted-foreground">
+                                {fileSize}
+                              </span>
+                            )}
+                          </a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </section>
+              )}
             </div>
           </div>
         </div>

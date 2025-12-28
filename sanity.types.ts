@@ -135,6 +135,17 @@ export type Residential = {
       label?: string
     }
   }
+  pdfFiles?: Array<{
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+    }
+    media?: unknown
+    _type: "file"
+    _key: string
+  }>
   contents?: {
     excerpt?: string
     description?: Array<{
@@ -318,9 +329,61 @@ export type AllSanitySchemaTypes =
   | Slug
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/lib/queries/real-estates.ts
-// Variable: RESIDENTIALS_QUERY
-// Query: *[_type == "residential"] | order(_createdAt desc) {    _id,    address,    map,    mainInfo,    mainSpecs,    additionalSpecs,    contents,  }
-export type RESIDENTIALS_QUERYResult = Array<{
+// Variable: RESIDENTIALS_LIST_QUERY
+// Query: *[_type == "residential"] | order(_createdAt desc) {    _id,    address {      streetName,      streetNumber,      city,      province    },    info {      price,      privateNegotiation,      rooms,      bathrooms,      locals    },    mainSpecs {      commercialSquareMeters    },    contents {      excerpt,      mainImage {        landscape {          asset->,          hotspot,          crop        }      }    }  }
+export type RESIDENTIALS_LIST_QUERYResult = Array<{
+  _id: string
+  address: {
+    streetName: string | null
+    streetNumber: string | null
+    city: string | null
+    province: string | null
+  } | null
+  info: {
+    price: number | null
+    privateNegotiation: boolean | null
+    rooms: number | null
+    bathrooms: number | null
+    locals: number | null
+  } | null
+  mainSpecs: {
+    commercialSquareMeters: number | null
+  } | null
+  contents: {
+    excerpt: string | null
+    mainImage: {
+      landscape: {
+        asset: {
+          _id: string
+          _type: "sanity.imageAsset"
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        hotspot: SanityImageHotspot | null
+        crop: SanityImageCrop | null
+      } | null
+    } | null
+  } | null
+}>
+// Variable: RESIDENTIAL_DETAIL_QUERY
+// Query: *[_type == "residential" && _id == $id][0] {    _id,    address,    map,    info,    mainSpecs,    additionalSpecs,    contents,    pdfFiles[] {      asset-> {        _id,        url,        originalFilename,        size      }    }  }
+export type RESIDENTIAL_DETAIL_QUERYResult = {
   _id: string
   address: {
     country?: string
@@ -335,7 +398,13 @@ export type RESIDENTIALS_QUERYResult = Array<{
     lat?: number
     lng?: number
   } | null
-  mainInfo: null
+  info: {
+    price?: number
+    locals?: number
+    rooms?: number
+    bathrooms?: number
+    privateNegotiation?: boolean
+  } | null
   mainSpecs: {
     commercialSquareMeters?: number
     condominiumExpenses?: number
@@ -470,12 +539,21 @@ export type RESIDENTIALS_QUERYResult = Array<{
       }
     }
   } | null
-}>
+  pdfFiles: Array<{
+    asset: {
+      _id: string
+      url: string | null
+      originalFilename: string | null
+      size: number | null
+    } | null
+  }> | null
+} | null
 
 // Query TypeMap
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "residential"] | order(_createdAt desc) {\n    _id,\n    address,\n    map,\n    mainInfo,\n    mainSpecs,\n    additionalSpecs,\n    contents,\n  }': RESIDENTIALS_QUERYResult
+    '*[_type == "residential"] | order(_createdAt desc) {\n    _id,\n    address {\n      streetName,\n      streetNumber,\n      city,\n      province\n    },\n    info {\n      price,\n      privateNegotiation,\n      rooms,\n      bathrooms,\n      locals\n    },\n    mainSpecs {\n      commercialSquareMeters\n    },\n    contents {\n      excerpt,\n      mainImage {\n        landscape {\n          asset->,\n          hotspot,\n          crop\n        }\n      }\n    }\n  }': RESIDENTIALS_LIST_QUERYResult
+    '*[_type == "residential" && _id == $id][0] {\n    _id,\n    address,\n    map,\n    info,\n    mainSpecs,\n    additionalSpecs,\n    contents,\n    pdfFiles[] {\n      asset-> {\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    }\n  }': RESIDENTIAL_DETAIL_QUERYResult
   }
 }
