@@ -33,7 +33,114 @@ export type Residential = {
     streetName?: string
     streetNumber?: string
     city?: string
-    province?: string
+    province?:
+      | "AG"
+      | "AL"
+      | "AN"
+      | "AO"
+      | "AR"
+      | "AP"
+      | "AT"
+      | "AV"
+      | "BA"
+      | "BT"
+      | "BL"
+      | "BN"
+      | "BG"
+      | "BI"
+      | "BO"
+      | "BZ"
+      | "BS"
+      | "BR"
+      | "CA"
+      | "CL"
+      | "CB"
+      | "CE"
+      | "CT"
+      | "CZ"
+      | "CH"
+      | "CO"
+      | "CS"
+      | "CR"
+      | "KR"
+      | "CN"
+      | "EN"
+      | "FM"
+      | "FE"
+      | "FI"
+      | "FG"
+      | "FC"
+      | "FR"
+      | "GE"
+      | "GO"
+      | "GR"
+      | "IM"
+      | "IS"
+      | "SP"
+      | "AQ"
+      | "LT"
+      | "LE"
+      | "LC"
+      | "LI"
+      | "LO"
+      | "LU"
+      | "MC"
+      | "MN"
+      | "MS"
+      | "MT"
+      | "ME"
+      | "MI"
+      | "MO"
+      | "MB"
+      | "NA"
+      | "NO"
+      | "NU"
+      | "OR"
+      | "PD"
+      | "PA"
+      | "PR"
+      | "PV"
+      | "PG"
+      | "PU"
+      | "PE"
+      | "PC"
+      | "PI"
+      | "PT"
+      | "PN"
+      | "PZ"
+      | "PO"
+      | "RG"
+      | "RA"
+      | "RC"
+      | "RE"
+      | "RI"
+      | "RN"
+      | "RM"
+      | "RO"
+      | "SA"
+      | "SS"
+      | "SV"
+      | "SI"
+      | "SR"
+      | "SO"
+      | "SU"
+      | "TA"
+      | "TE"
+      | "TR"
+      | "TO"
+      | "TP"
+      | "TN"
+      | "TV"
+      | "TS"
+      | "UD"
+      | "VA"
+      | "VE"
+      | "VB"
+      | "VC"
+      | "VR"
+      | "VV"
+      | "VI"
+      | "VT"
     zip?: string
   }
   map?: {
@@ -167,30 +274,18 @@ export type Residential = {
       _key: string
     }>
     mainImage?: {
-      landscape?: {
-        asset?: {
-          _ref: string
-          _type: "reference"
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        _type: "image"
+      asset?: {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
       }
-      portrait?: {
-        asset?: {
-          _ref: string
-          _type: "reference"
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        _type: "image"
-      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      title?: string
+      _type: "image"
     }
   }
 }
@@ -330,14 +425,122 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/lib/queries/real-estates.ts
 // Variable: RESIDENTIALS_LIST_QUERY
-// Query: *[_type == "residential"] | order(_createdAt desc) {    _id,    address {      streetName,      streetNumber,      city,      province    },    info {      price,      privateNegotiation,      rooms,      bathrooms,      locals    },    mainSpecs {      commercialSquareMeters    },    contents {      excerpt,      mainImage {        landscape {          asset->,          hotspot,          crop        }      }    }  }
+// Query: *[_type == "residential"] | order(_createdAt desc) {    _id,    address {      streetName,      streetNumber,      city,      province    },    info {      price,      privateNegotiation,      rooms,      bathrooms,      locals    },    mainSpecs {      commercialSquareMeters    },    contents {      excerpt,      mainImage {        asset->,        hotspot,        crop,        alt,        title      }    }  }
 export type RESIDENTIALS_LIST_QUERYResult = Array<{
   _id: string
   address: {
     streetName: string | null
     streetNumber: string | null
     city: string | null
-    province: string | null
+    province:
+      | "AG"
+      | "AL"
+      | "AN"
+      | "AO"
+      | "AP"
+      | "AQ"
+      | "AR"
+      | "AT"
+      | "AV"
+      | "BA"
+      | "BG"
+      | "BI"
+      | "BL"
+      | "BN"
+      | "BO"
+      | "BR"
+      | "BS"
+      | "BT"
+      | "BZ"
+      | "CA"
+      | "CB"
+      | "CE"
+      | "CH"
+      | "CL"
+      | "CN"
+      | "CO"
+      | "CR"
+      | "CS"
+      | "CT"
+      | "CZ"
+      | "EN"
+      | "FC"
+      | "FE"
+      | "FG"
+      | "FI"
+      | "FM"
+      | "FR"
+      | "GE"
+      | "GO"
+      | "GR"
+      | "IM"
+      | "IS"
+      | "KR"
+      | "LC"
+      | "LE"
+      | "LI"
+      | "LO"
+      | "LT"
+      | "LU"
+      | "MB"
+      | "MC"
+      | "ME"
+      | "MI"
+      | "MN"
+      | "MO"
+      | "MS"
+      | "MT"
+      | "NA"
+      | "NO"
+      | "NU"
+      | "OR"
+      | "PA"
+      | "PC"
+      | "PD"
+      | "PE"
+      | "PG"
+      | "PI"
+      | "PN"
+      | "PO"
+      | "PR"
+      | "PT"
+      | "PU"
+      | "PV"
+      | "PZ"
+      | "RA"
+      | "RC"
+      | "RE"
+      | "RG"
+      | "RI"
+      | "RM"
+      | "RN"
+      | "RO"
+      | "SA"
+      | "SI"
+      | "SO"
+      | "SP"
+      | "SR"
+      | "SS"
+      | "SU"
+      | "SV"
+      | "TA"
+      | "TE"
+      | "TN"
+      | "TO"
+      | "TP"
+      | "TR"
+      | "TS"
+      | "TV"
+      | "UD"
+      | "VA"
+      | "VB"
+      | "VC"
+      | "VE"
+      | "VI"
+      | "VR"
+      | "VT"
+      | "VV"
+      | null
   } | null
   info: {
     price: number | null
@@ -352,32 +555,32 @@ export type RESIDENTIALS_LIST_QUERYResult = Array<{
   contents: {
     excerpt: string | null
     mainImage: {
-      landscape: {
-        asset: {
-          _id: string
-          _type: "sanity.imageAsset"
-          _createdAt: string
-          _updatedAt: string
-          _rev: string
-          originalFilename?: string
-          label?: string
-          title?: string
-          description?: string
-          altText?: string
-          sha1hash?: string
-          extension?: string
-          mimeType?: string
-          size?: number
-          assetId?: string
-          uploadId?: string
-          path?: string
-          url?: string
-          metadata?: SanityImageMetadata
-          source?: SanityAssetSourceData
-        } | null
-        hotspot: SanityImageHotspot | null
-        crop: SanityImageCrop | null
+      asset: {
+        _id: string
+        _type: "sanity.imageAsset"
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
       } | null
+      hotspot: SanityImageHotspot | null
+      crop: SanityImageCrop | null
+      alt: string | null
+      title: string | null
     } | null
   } | null
 }>
@@ -390,7 +593,114 @@ export type RESIDENTIAL_DETAIL_QUERYResult = {
     streetName?: string
     streetNumber?: string
     city?: string
-    province?: string
+    province?:
+      | "AG"
+      | "AL"
+      | "AN"
+      | "AO"
+      | "AP"
+      | "AQ"
+      | "AR"
+      | "AT"
+      | "AV"
+      | "BA"
+      | "BG"
+      | "BI"
+      | "BL"
+      | "BN"
+      | "BO"
+      | "BR"
+      | "BS"
+      | "BT"
+      | "BZ"
+      | "CA"
+      | "CB"
+      | "CE"
+      | "CH"
+      | "CL"
+      | "CN"
+      | "CO"
+      | "CR"
+      | "CS"
+      | "CT"
+      | "CZ"
+      | "EN"
+      | "FC"
+      | "FE"
+      | "FG"
+      | "FI"
+      | "FM"
+      | "FR"
+      | "GE"
+      | "GO"
+      | "GR"
+      | "IM"
+      | "IS"
+      | "KR"
+      | "LC"
+      | "LE"
+      | "LI"
+      | "LO"
+      | "LT"
+      | "LU"
+      | "MB"
+      | "MC"
+      | "ME"
+      | "MI"
+      | "MN"
+      | "MO"
+      | "MS"
+      | "MT"
+      | "NA"
+      | "NO"
+      | "NU"
+      | "OR"
+      | "PA"
+      | "PC"
+      | "PD"
+      | "PE"
+      | "PG"
+      | "PI"
+      | "PN"
+      | "PO"
+      | "PR"
+      | "PT"
+      | "PU"
+      | "PV"
+      | "PZ"
+      | "RA"
+      | "RC"
+      | "RE"
+      | "RG"
+      | "RI"
+      | "RM"
+      | "RN"
+      | "RO"
+      | "SA"
+      | "SI"
+      | "SO"
+      | "SP"
+      | "SR"
+      | "SS"
+      | "SU"
+      | "SV"
+      | "TA"
+      | "TE"
+      | "TN"
+      | "TO"
+      | "TP"
+      | "TR"
+      | "TS"
+      | "TV"
+      | "UD"
+      | "VA"
+      | "VB"
+      | "VC"
+      | "VE"
+      | "VI"
+      | "VR"
+      | "VT"
+      | "VV"
     zip?: string
   } | null
   map: {
@@ -513,30 +823,18 @@ export type RESIDENTIAL_DETAIL_QUERYResult = {
       _key: string
     }>
     mainImage?: {
-      landscape?: {
-        asset?: {
-          _ref: string
-          _type: "reference"
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        _type: "image"
+      asset?: {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
       }
-      portrait?: {
-        asset?: {
-          _ref: string
-          _type: "reference"
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        _type: "image"
-      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      title?: string
+      _type: "image"
     }
   } | null
   pdfFiles: Array<{
@@ -553,7 +851,7 @@ export type RESIDENTIAL_DETAIL_QUERYResult = {
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "residential"] | order(_createdAt desc) {\n    _id,\n    address {\n      streetName,\n      streetNumber,\n      city,\n      province\n    },\n    info {\n      price,\n      privateNegotiation,\n      rooms,\n      bathrooms,\n      locals\n    },\n    mainSpecs {\n      commercialSquareMeters\n    },\n    contents {\n      excerpt,\n      mainImage {\n        landscape {\n          asset->,\n          hotspot,\n          crop\n        }\n      }\n    }\n  }': RESIDENTIALS_LIST_QUERYResult
+    '*[_type == "residential"] | order(_createdAt desc) {\n    _id,\n    address {\n      streetName,\n      streetNumber,\n      city,\n      province\n    },\n    info {\n      price,\n      privateNegotiation,\n      rooms,\n      bathrooms,\n      locals\n    },\n    mainSpecs {\n      commercialSquareMeters\n    },\n    contents {\n      excerpt,\n      mainImage {\n        asset->,\n        hotspot,\n        crop,\n        alt,\n        title\n      }\n    }\n  }': RESIDENTIALS_LIST_QUERYResult
     '*[_type == "residential" && _id == $id][0] {\n    _id,\n    address,\n    map,\n    info,\n    mainSpecs,\n    additionalSpecs,\n    contents,\n    pdfFiles[] {\n      asset-> {\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    }\n  }': RESIDENTIAL_DETAIL_QUERYResult
   }
 }

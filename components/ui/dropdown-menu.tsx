@@ -86,6 +86,7 @@ function DropdownMenuCheckboxItem({
   className,
   children,
   checked,
+  isSelected: _isSelected,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>) {
   return (
@@ -122,6 +123,7 @@ function DropdownMenuRadioGroup({
 function DropdownMenuRadioItem({
   className,
   children,
+  isSelected: _isSelected,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
   return (

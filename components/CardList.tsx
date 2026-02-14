@@ -1,8 +1,10 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 
-import { urlFor } from "@/sanity/lib/image"
-import type { Residential } from "@/sanity.types"
+import type { RESIDENTIALS_LIST_QUERYResult } from "@/sanity.types"
+import { getSanityImageUrl } from "@/utils/sanity-image-url"
 
 function formatPrice(price?: number, privateNegotiation?: boolean) {
   if (privateNegotiation) return "Trattativa Riservata"
@@ -14,7 +16,9 @@ function formatPrice(price?: number, privateNegotiation?: boolean) {
   }).format(price)
 }
 
-function formatAddress(address?: Residential["address"]) {
+function formatAddress(
+  address?: RESIDENTIALS_LIST_QUERYResult[number]["address"],
+) {
   if (!address) return "Indirizzo non disponibile"
   const parts = [
     address.streetName,
@@ -26,7 +30,7 @@ function formatAddress(address?: Residential["address"]) {
 }
 
 interface CardListProps {
-  properties: Residential[]
+  properties: RESIDENTIALS_LIST_QUERYResult
 }
 
 export function CardList({ properties }: CardListProps) {
@@ -41,12 +45,11 @@ export function CardList({ properties }: CardListProps) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {properties.map((property) => {
-        const imageUrl = property.contents?.mainImage?.landscape
-          ? urlFor(property.contents.mainImage.landscape)
-              .width(600)
-              .height(400)
-              .url()
-          : null
+        const imageUrl = getSanityImageUrl(
+          property.contents?.mainImage,
+          400,
+          225,
+        )
 
         return (
           <div
@@ -57,7 +60,7 @@ export function CardList({ properties }: CardListProps) {
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
                   src={imageUrl}
-                  alt={property.contents?.excerpt || "Immagine immobile"}
+                  alt={property.contents?.mainImage?.alt || ""}
                   fill
                   className="object-cover"
                 />
@@ -77,8 +80,8 @@ export function CardList({ properties }: CardListProps) {
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-foreground">
                     {formatPrice(
-                      property.info?.price,
-                      property.info?.privateNegotiation,
+                      property.info?.price ?? undefined,
+                      property.info?.privateNegotiation ?? undefined,
                     )}
                   </span>
                 </div>

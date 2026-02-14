@@ -1,7 +1,7 @@
 import Image from "next/image"
 
-import { urlFor } from "@/sanity/lib/image"
 import type { RESIDENTIAL_DETAIL_QUERYResult } from "@/sanity.types"
+import { getSanityImageUrl } from "@/utils/sanity-image-url"
 
 import RichText from "@/components/RichText"
 import MapDetail from "@/components/MapDetail"
@@ -47,16 +47,11 @@ function formatFullAddress(address?: Property["address"]) {
 }
 
 export function PropertyDetail({ property }: PropertyDetailProps) {
-  const landscapeImageUrl = property.contents?.mainImage?.landscape
-    ? urlFor(property.contents.mainImage.landscape)
-        .width(1200)
-        .height(600)
-        .url()
-    : null
-
-  const portraitImageUrl = property.contents?.mainImage?.portrait
-    ? urlFor(property.contents.mainImage.portrait).width(600).height(800).url()
-    : null
+  const imageUrl = getSanityImageUrl(
+    property.contents?.mainImage,
+    1920,
+    1080,
+  )
 
   return (
     <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
@@ -80,10 +75,10 @@ export function PropertyDetail({ property }: PropertyDetailProps) {
         </div>
 
         {/* Immagine principale */}
-        {landscapeImageUrl && (
+        {imageUrl && (
           <div className="relative mb-8 h-96 w-full overflow-hidden rounded-xl">
             <Image
-              src={landscapeImageUrl}
+              src={imageUrl}
               alt={property.contents?.excerpt || "Immagine immobile"}
               fill
               className="object-cover"
@@ -360,11 +355,11 @@ export function PropertyDetail({ property }: PropertyDetailProps) {
               )}
 
               {/* Immagine portrait (mobile) */}
-              {portraitImageUrl && (
+              {imageUrl && (
                 <section className="rounded-lg border bg-card overflow-hidden">
                   <div className="relative h-64 w-full">
                     <Image
-                      src={portraitImageUrl}
+                      src={imageUrl}
                       alt={property.contents?.excerpt || "Immagine immobile"}
                       fill
                       className="object-cover"

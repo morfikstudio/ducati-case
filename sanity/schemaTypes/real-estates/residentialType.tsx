@@ -14,6 +14,7 @@ import {
   TENNIS_COURT_OPTS,
   AIR_CONDITIONING_OPTS,
 } from "../../lib/constants/dataset"
+import { PROVINCES } from "../../lib/constants/provinces"
 
 import { createSelectWithCustomField } from "../../lib/helpers/createSelectWithCustomField"
 import { createSelectWithAutoTitle } from "../../lib/helpers/createSelectWithAutoTitle"
@@ -87,16 +88,13 @@ export const residentialType = defineType({
           name: "province",
           type: "string",
           title: "Provincia",
-          description:
-            "Sigla di due lettere maiuscole della Provincia in cui è situato l'immobile",
-          initialValue: "",
-          validation: (rule) =>
-            rule.custom((value) => {
-              if (value?.length !== 2 || !/^[A-Z]{2}$/.test(value)) {
-                return "La sigla deve essere esattamente 2 lettere maiuscole (es. MI)"
-              }
-              return true
-            }),
+          description: "Seleziona la provincia in cui è situato l'immobile",
+          options: {
+            list: PROVINCES.map((province) => ({
+              title: province.label,
+              value: province.value,
+            })),
+          },
         }),
         defineField({
           name: "zip",
@@ -335,13 +333,11 @@ export const residentialType = defineType({
             value.description &&
             Array.isArray(value.description) &&
             value.description.length > 0
-          const mainImage = value.mainImage as
-            | {
-                landscape?: unknown
-                portrait?: unknown
-              }
-            | undefined
-          const hasMainImage = mainImage?.landscape && mainImage?.portrait
+          const hasMainImage =
+            value.mainImage &&
+            typeof value.mainImage === "object" &&
+            "asset" in value.mainImage &&
+            value.mainImage.asset != null
 
           if (!hasExcerpt || !hasDescription || !hasMainImage) {
             return "Tutti i campi devono essere compilati"
@@ -367,17 +363,24 @@ export const residentialType = defineType({
         defineField({
           name: "mainImage",
           title: "Immagine Principale",
-          type: "object",
+          type: "image",
+          options: {
+            hotspot: {
+              previews: [{ title: "16:9", aspectRatio: 16 / 9 }],
+            },
+          },
           fields: [
             {
-              name: "landscape",
-              title: "Desktop",
-              type: "image",
+              name: "title",
+              type: "string",
+              title: "Titolo",
+              description: "Titolo o didascalia dell'immagine.",
             },
             {
-              name: "portrait",
-              title: "Mobile",
-              type: "image",
+              name: "alt",
+              type: "string",
+              title: "Testo alternativo",
+              description: "Descrizione dell'immagine per accessibilità e SEO.",
             },
           ],
         }),
@@ -388,13 +391,12 @@ export const residentialType = defineType({
   preview: {
     select: {
       address: "address",
-      contents: "contents",
-      media: "contents.mainImage.landscape",
+      media: "contents.mainImage",
     },
-    prepare({ address, contents }) {
+    prepare({ address, media }) {
       const preview = {
         title: "Nuovo immobile residenziale",
-        media: null,
+        media: media ?? null,
       }
 
       if (
@@ -405,10 +407,6 @@ export const residentialType = defineType({
       ) {
         const { streetName, streetNumber, city, province } = address
         preview.title = `${streetName} ${streetNumber} - ${city} ${province}`
-      }
-
-      if (contents?.mainImage?.landscape) {
-        preview.media = contents.mainImage.landscape
       }
 
       return preview

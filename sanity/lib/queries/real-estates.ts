@@ -26,11 +26,11 @@ export const RESIDENTIALS_LIST_QUERY = defineQuery(
     contents {
       excerpt,
       mainImage {
-        landscape {
-          asset->,
-          hotspot,
-          crop
-        }
+        asset->,
+        hotspot,
+        crop,
+        title,
+        alt
       }
     }
   }`,

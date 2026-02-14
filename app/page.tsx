@@ -1,11 +1,13 @@
 import { client } from "@/sanity/lib/client"
 import { RESIDENTIALS_LIST_QUERY } from "@/sanity/lib/queries"
-import type { Residential } from "@/sanity.types"
+import type { RESIDENTIALS_LIST_QUERYResult } from "@/sanity.types"
 
 import { CardList } from "@/components/CardList"
 
 export default async function Home() {
-  const properties = await client.fetch<Residential[]>(RESIDENTIALS_LIST_QUERY)
+  const properties = await client.fetch<RESIDENTIALS_LIST_QUERYResult>(
+    RESIDENTIALS_LIST_QUERY,
+  )
 
   return (
     <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
